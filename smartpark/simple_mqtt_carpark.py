@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from config_parser import parse_config
 import mqtt_device
 import paho.mqtt.client as paho
 from paho.mqtt.client import MQTTMessage
@@ -14,8 +15,9 @@ class CarPark(mqtt_device.MqttDevice):
         self.total_cars = config['total-cars']
         self.client.on_message = self.on_message
         self.client.subscribe('sensor')
-        self.client.loop_forever()
         self._temperature = None
+        self.client.loop_forever()
+
 
     @property
     def available_spaces(self):
@@ -36,13 +38,13 @@ class CarPark(mqtt_device.MqttDevice):
             (
                 f"TIME: {readable_time}, "
                 + f"SPACES: {self.available_spaces}, "
-                + "TEMPC: 42"
+                + f"TEMPC: {self._temperature}"
             )
         )
         message = (
             f"TIME: {readable_time}, "
             + f"SPACES: {self.available_spaces}, "
-            + "TEMPC: 42"
+            + f"TEMPC: {self._temperature}"
         )
         self.client.publish('display', message)
 
@@ -58,26 +60,24 @@ class CarPark(mqtt_device.MqttDevice):
 
     def on_message(self, client, userdata, msg: MQTTMessage):
         payload = msg.payload.decode()
-        # TODO: Extract temperature from payload
-        # self.temperature = ... # Extracted value
-        if 'exit' in payload:
+        payload = payload.split(",")
+        print(payload)
+
+
+
+
+        self.temperature = payload[1]
+        if 'exit' in payload[0]:
+
             self.on_car_exit()
         else:
             self.on_car_entry()
 
 
+
+
 if __name__ == '__main__':
-    config = {'name': "raf-park",
-              'total-spaces': 130,
-              'total-cars': 0,
-              'location': 'L306',
-              'topic-root': "lot",
-              'broker': 'localhost',
-              'port': 1883,
-              'topic-qualifier': 'entry',
-              'is_stuff': False
-              }
-    # TODO: Read config from file
+    config = parse_config("package.json")
     car_park = CarPark(config)
     print("Carpark initialized")
     print("Carpark initialized")

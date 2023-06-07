@@ -11,15 +11,16 @@ class Display(mqtt_device.MqttDevice):
     def display(self, *args):
         print('*' * 20)
         for val in args:
-            print(val)
+            print(val.strip())
             time.sleep(1)
 
         print('*' * 20)
     def on_message(self, client, userdata, msg):
        data = msg.payload.decode()
+
        self.display(*data.split(','))
-       # TODO: Parse the message and extract free spaces,\
-       #  temperature, time
+
+
 if __name__ == '__main__':
     config = {'name': 'display',
      'location': 'L306',
