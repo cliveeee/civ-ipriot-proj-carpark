@@ -37,14 +37,14 @@ class CarPark(mqtt_device.MqttDevice):
         print(
             (
                 f"TIME: {readable_time}, "
-                + f"SPACES: {self.available_spaces}, "
-                + f"TEMPC: {self._temperature}"
+                + f"SPACES AVAILABLE: {self.available_spaces}, "
+                + f"TEMPERATURE: {self._temperature}°C"
             )
         )
         message = (
             f"TIME: {readable_time}, "
-            + f"SPACES: {self.available_spaces}, "
-            + f"TEMPC: {self._temperature}"
+            + f"SPACES AVAILABLE: {self.available_spaces}, "
+            + f"TEMPERATURE: {self._temperature}°C"
         )
         self.client.publish('display', message)
 

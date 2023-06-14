@@ -20,8 +20,8 @@ class Sensor(mqtt_device.MqttDevice):
         """ A blocking event loop that waits for detection events, in this
         case Enter presses"""
         while True:
-            print("Press E when 🚗 entered!")
-            print("Press X when 🚖 exited!")
+            print("Press E when 🚗 enters!")
+            print("Press X when 🚖 exits!")
             detection = input("E or X> ").upper()
             if detection == 'E':
                 self.on_detection(f"entered, {self.temperature}")
