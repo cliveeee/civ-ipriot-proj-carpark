@@ -24,9 +24,9 @@ class Sensor(mqtt_device.MqttDevice):
             print("Press X when 🚖 exits!")
             detection = input("E or X> ").upper()
             if detection == 'E':
-                self.on_detection(f"entered, {self.temperature}")
+                self.on_detection(f" The car entered, {self.temperature}")
             else:
-                self.on_detection(f"exited, {self.temperature}")
+                self.on_detection(f"The car have exited, {self.temperature}")
 
 
 if __name__ == '__main__':
