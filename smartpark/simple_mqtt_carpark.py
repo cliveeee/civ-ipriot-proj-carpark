@@ -79,5 +79,5 @@ class CarPark(mqtt_device.MqttDevice):
 if __name__ == '__main__':
     config = parse_config("package.json")
     car_park = CarPark(config)
-    print("Carpark initialized")
-    print("Carpark initialized")
+    print("Car-park initialized")
+    print("Car-park initialized")
